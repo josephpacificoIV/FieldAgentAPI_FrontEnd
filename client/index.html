@@ -14,12 +14,48 @@
 <main>
     <h1>Field Agent</h1>
     <div class = "container">
+        <form id="viewAgent" onsubmit="getAll()" class="mb-3">
+            <fieldset>
+                <legend>View all Agents</legend>
         <div><button onclick="getAll()">Get: All</button></div>
-        <div><button onclick="getById()">Get: By Id</button></div>
-        <div><button onclick="post()">Post: Add/Create</button></div>
+            </fieldset>
+        </form>
+        <div id="results"></div>
+        <br>
+        <form id="addAgent" onsubmit="post()" class="mb-3">
+            <fieldset>
+                <legend>Add a new Agent</legend>
+                <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <label for="firstName">First Name</label>
+                        <input type="text" class="form-control" id="firstName">
+                    </div>
+                    <div class="form-group col-md-9">
+                        <label for="middleName">Middle Name</label>
+                        <input type="text" class="form-control" id="middleName">
+                    </div>
+                    <div class="form-group col-md-9">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" class="form-control" id="lastName">
+                    </div>
+                    <div class="form-group col-md-9">
+                        <label for="dob">Date of Birth (YYYY-MM-DD)</label>
+                        <input type="date" class="form-control" id="dob">
+                    </div>
+                    <div class="form-group col-md-9">
+                        <label for="heightInInches">Height in Inches</label>
+                        <input type="number" class="form-control" id="heightInInches">
+                    </div>
+                </div>
+                <button onsubmit="post()" type="submit" class="btn btn-primary">Post:Add/Create</button>
+            </fieldset>
+        </form>
+
+        <h3>Messages</h3>
+        <div id="messages" class="alert alert-info" role="alert"></div>
         <div><button onclick="put()">Put: Edit/Update</button></div>
         <div><button onclick="doDelete()">Delete</button></div>
-        <div id="results"></div>
+
     </div>
 </main>
 <script src="main.js"></script>
