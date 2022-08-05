@@ -4,10 +4,10 @@
 ## Implement a full CRUD UI for agents.
 
 ### Read
-- [] Display all agents.
-- [] Tabular Format
-- [] Edit Button
-- [] Delete Button
+- [X] Display all agents.
+- [ ] Tabular Format
+- [X] Edit/Update Button
+- [X] Delete/Update Button
 ### Create
 - [] Add an agent.
 ### Update

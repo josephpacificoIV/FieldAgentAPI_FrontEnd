@@ -53,8 +53,8 @@ const init = {
 
 
 async function put() {
-const agentToUpdate = document.getElementById("")
-const agentId = document.getElementById(`agent${}`)
+//const agentToUpdate = document.getElementById("")
+//const agentId = document.getElementById(`agent${}`)
 
     const solarpanel = {
         "id": solarpanelId,
