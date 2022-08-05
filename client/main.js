@@ -92,7 +92,6 @@ addAgentForm.addEventListener("submit", evt => {
 
     if (errorMessages.length === 0){
        post();
-       renderSuccessMessage("Agent created.");
     } else {
         renderErrorMessages(errorMessages);
     }
@@ -162,11 +161,11 @@ async function post() {
     fetch("http://localhost:8080/api/agent", init)
         .then(response => {
             if (response.status !== 201) {
-                console.log("Agent is not valid.");
+                renderSuccessMessage("Agent is not valid.");
                 return Promise.reject("response is not 200 OK");
             }
             return response.json();
-        }).then(json => console.log("New agent created:", json));
+        }).then(json => renderSuccessMessage("New agent created:", json));
 
 }
 
