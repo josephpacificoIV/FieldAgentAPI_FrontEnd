@@ -1,12 +1,12 @@
 
 
 function init(){
-    getFieldAgents()
+    getAgents()
     .then(data => renderList(data));
 
 }
 
-function getFieldAgents (){ // ASYNCHRONOUS method
+function getAgents (){ // ASYNCHRONOUS method
     return fetch('http://localhost:8080/api/agent') // fetch returns a promise
     .then(response => {
         //console.log(response)); // returns a promise
@@ -15,10 +15,20 @@ function getFieldAgents (){ // ASYNCHRONOUS method
     })
 }
 
-function renderList(fieldAgents){
+
+function handleEditAgent(agentId){
+    console.log('Editing Agent Id: ' + agentId) // Step 1: confirm the clicking is working
+}
+
+function handleDeleteAgent(agentId){
+    console.log('Deleting Agent Id: ' + agentId)
+
+}
+
+function renderList(agents){
     // console.log(fieldAgents); // STOP, check that it outputs to fieldAgents to console
 
-    const fieldAgentsHTML = fieldAgents.map(agent => {
+    const agentsHTML = agents.map(agent => {
         return `<tr>
         <td>${agent.agentId}</td>
         <td>${agent.firstName}</td>
@@ -27,14 +37,14 @@ function renderList(fieldAgents){
         <td>${agent.dob}</td>
         <td>${agent.heightInInches}</td>
         <td>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button onclick="handleEditAgent(${agent.agentId})">Edit</button>
+            <button onclick="handleDeleteAgent(${agent.agentId})">Delete</button>
         </td>
         </tr>`
     });
 
     const tableBodyElement = document.getElementById('tableRows');
-    tableBodyElement.innerHTML = fieldAgentsHTML.join(''); // join method on array, joins all elements into 1 concatenated string
+    tableBodyElement.innerHTML = agentsHTML.join(''); // join method on array, joins all elements into 1 concatenated string
 
 }
 
