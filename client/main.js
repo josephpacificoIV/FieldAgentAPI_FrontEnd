@@ -3,7 +3,7 @@ const resultsDiv = document.getElementById("results");
 const addAgentForm = document.getElementById("addAgent");
 const viewAgentForm = document.getElementById("viewAgent");
 const messagesDiv = document.getElementById("messages");
-const agentTable = document.getElementById("agentTable");
+
 
 // step 1
 // in powershell, cd to "/bug-safari-two/project (replace project with the client-side folder)
@@ -113,18 +113,55 @@ addAgentForm.addEventListener("submit", evt => {
     }
 
     // check for duplicate agent
-    const agents = [];
 
-    for (const a of Object.keys(agentTable)){
-    if (a.firstName === firstName
+    const agentTable = document.getElementById("agentTable");
+
+    for (const tr of agentTable.querySelectorAll("tbody tr")){
+
+        //Extract first and second cell from this row
+        //const td0 = tr.querySelector("td:nth-child(1)"); // this is agentId
+        const td1 = tr.querySelector("td:nth-child(2)");
+        const td2 = tr.querySelector("td:nth-child(3)");
+        const td3 = tr.querySelector("td:nth-child(4)");
+        const td4 = tr.querySelector("td:nth-child(5)");
+        const td5 = tr.querySelector("td:nth-child(6)");
+
+        //If this row has missing cells, skip it
+        if(!td1 || !td2 || !td3 || !td4 || !td5) {
+              continue;
+            }
+        if ((td1.innerHTML == firstName)
+        && (td2.innerHTML == middleName)
+        && (td3.innerHTML == lastName)
+        && (td4.innerHTML == dob)
+        && (td5.innerHTML == heightInInches)) {
+
+              errorMessages.push(`Match found for ${firstName} and ${lastName}. Insert rejected`);
+              return;
+            }
+          }
+            /*var row = table.insertRow(9);
+
+            var cell1 = row.insertCell(0); // agentId
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+
+            cell1.innerHTML = id;
+            cell2.innerHTML = name;*/
+
+
+    /*if (a.firstName === firstName
     && a.middleName === middleName
      && a.lastName === lastName
      && a.dob === dob
      && a.heightInInches === heightInInches){
      errorMessages.push("Duplicate agent is not allowed.")
-     }
+     }*/
 
-    }
+
 
 
 
