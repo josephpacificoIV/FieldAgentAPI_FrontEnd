@@ -22,7 +22,7 @@
         </form>
         <div id="results"></div>
         <br>
-        <form id="addAgent" onsubmit="post()" class="mb-3">
+        <form id="addAgent" class="mb-3">
             <fieldset>
                 <legend>Add a new Agent</legend>
                 <div class="form-row">
@@ -47,12 +47,14 @@
                         <input type="number" class="form-control" id="heightInInches">
                     </div>
                 </div>
-                <button onsubmit="post()" type="submit" class="btn btn-primary">Post:Add/Create</button>
+                <button type="submit" class="btn btn-primary">Post:Add/Create</button>
             </fieldset>
         </form>
 
         <h3>Messages</h3>
         <div id="messages" class="alert alert-info" role="alert"></div>
+
+
         <div><button onclick="put()">Put: Edit/Update</button></div>
         <div><button onclick="doDelete()">Delete</button></div>
 

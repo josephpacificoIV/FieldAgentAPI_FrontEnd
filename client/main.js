@@ -68,26 +68,26 @@ addAgentForm.addEventListener("submit", evt => {
     const firstName = document.getElementById("firstName").value.trim();
     if (firstName.length === 0) {
         errorMessages.push("First name is required.");
-        return;
     }
 
 
     const lastName = document.getElementById("lastName").value.trim();
             if (lastName.length === 0) {
                 errorMessages.push("Last name is required.");
-                return;
             }
 
-    const dob = Date.parse(document.getElementById("dob").value);
-    if (dob === null) {
+    const dob = new Date(document.getElementById("dob").value);
+    const curDate = new Date();
+
+    if (isNaN(dob)) {
         errorMessages.push("Date of Birth is required.");
-        return;
+    } else if ( dob > (curDate.setFullYear(curDate.getFullYear() - 12)) ){
+        errorMessages.push("Agent must be at least 12 years old.");
     }
 
-    const heightInInches = document.getElementById("heightInInches").value;
-    if (heightInInches >= 36 || heightInInches <= 96) {
+    const heightInInches = parseInt(document.getElementById("heightInInches").value);
+    if (!(heightInInches >= 36 && heightInInches <= 96)) {
         errorMessages.push("height must be between 36 and 96 inches");
-        return;
     }
 
     if (errorMessages.length === 0){
