@@ -3,6 +3,7 @@ const resultsDiv = document.getElementById("results");
 const addAgentForm = document.getElementById("addAgent");
 const viewAgentForm = document.getElementById("viewAgent");
 const messagesDiv = document.getElementById("messages");
+const agentTable = document.getElementById("agentTable");
 
 // step 1
 // in powershell, cd to "/bug-safari-two/project (replace project with the client-side folder)
@@ -43,9 +44,8 @@ const init = {
     }
     const json = await response.json();
 
-    // Add data to the DOM.
-    let html = "";
-    for (const a of json) {
+
+    /*for (const a of json) {
         html += `<div id="agent${a.agentId}">
         <strong>${a.agentId}</strong>
         ${a.firstName}
@@ -56,9 +56,31 @@ const init = {
         <button onclick="put()">Edit</button>
         <button onclick="delete()">Delete</button>
         </div>`
+    }*/
+
+    // Add data to the DOM.
+    let html = "";
+    for (const a of json) {
+    html += `<tr>
+            <td>${a.agentId}</td>
+            <td>${a.firstName}</td>
+            <td>${a.middleName}</td>
+            <td>${a.lastName}</td>
+            <td>${a.dob}</td>
+            <td>${a.heightInInches}</td>
+            <td><button onclick="put()">Edit</button></td>
+            <td><button onclick="delete()">Delete</button></td>
+            </tr>`
+
     }
-    document.getElementById("results").innerHTML = html;
+
+    // set the table body to the new html code
+    document.getElementById("Customdata").innerHTML = html;
+
+    //https://stackoverflow.com/questions/39958133/how-to-add-data-in-tbody-using-javascript-only
 }
+
+
 
 addAgentForm.addEventListener("submit", evt => {
     evt.preventDefault();
@@ -72,9 +94,9 @@ addAgentForm.addEventListener("submit", evt => {
 
 
     const lastName = document.getElementById("lastName").value.trim();
-            if (lastName.length === 0) {
-                errorMessages.push("Last name is required.");
-            }
+    if (lastName.length === 0) {
+        errorMessages.push("Last name is required.");
+    }
 
     const dob = new Date(document.getElementById("dob").value);
     const curDate = new Date();
@@ -90,17 +112,29 @@ addAgentForm.addEventListener("submit", evt => {
         errorMessages.push("height must be between 36 and 96 inches");
     }
 
+    // check for duplicate agent
+    const agents = [];
+
+    for (const a of Object.keys(agentTable)){
+    if (a.firstName === firstName
+    && a.middleName === middleName
+     && a.lastName === lastName
+     && a.dob === dob
+     && a.heightInInches === heightInInches){
+     errorMessages.push("Duplicate agent is not allowed.")
+     }
+
+    }
+
+
+
     if (errorMessages.length === 0){
        post();
     } else {
         renderErrorMessages(errorMessages);
     }
 
-    /*capsules[capsule - 1] = guest;
-    document.getElementById(`capsuleLabel${capsule}`).className = "badge badge-pill badge-danger";
-    document.getElementById(`guest${capsule}`).innerText = guest;
-    success(`Agent: ${guest} booked in capsule #${capsule}.`);
-    document.getElementById("guest").value = "";*/
+
 })
 
 const renderErrorMessages = errorMessages => {
@@ -165,7 +199,7 @@ async function post() {
                 return Promise.reject("response is not 200 OK");
             }
             return response.json();
-        }).then(json => renderSuccessMessage("New agent created:", json));
+        }).then(json => renderSuccessMessage("<New agent created", json));
 
 }
 

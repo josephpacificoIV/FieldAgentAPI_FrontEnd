@@ -20,7 +20,27 @@
         <div><button onclick="getAll()">Get: All</button></div>
             </fieldset>
         </form>
-        <div id="results"></div>
+
+        <div id="agentTable" class="agentTable">
+            <h1>Agents</h1>
+            <table class="table table-striped">
+                <caption>List of current Agents deployed</caption>
+                <thead class="thead-dark">
+                <tr>
+                    <th>Agent ID</th>
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Last Name</th>
+                    <th>DOB</th>
+                    <th>Height (in)</th>
+                </tr>
+                </thead>
+                <tbody id="Customdata"></tbody>
+                </table>
+        </div>
+
+
+
         <br>
         <form id="addAgent" class="mb-3">
             <fieldset>
