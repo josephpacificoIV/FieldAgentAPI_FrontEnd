@@ -140,6 +140,7 @@ addAgentForm.addEventListener("submit", evt => {
               return;
             }
           }
+          // https://stackoverflow.com/questions/54413159/javascript-catch-and-prevent-duplicate-row-entry-in-html-table
             /*var row = table.insertRow(9);
 
             var cell1 = row.insertCell(0); // agentId
@@ -240,38 +241,3 @@ async function post() {
 
 }
 
-
-async function put() {
-//const agentToUpdate = document.getElementById("")
-//const agentId = document.getElementById(`agent${}`)
-
-    const solarpanel = {
-        "id": solarpanelId,
-        "section": "The Ridge",
-        "row": 2,
-        "column": 6,
-        "year_installed": 2017,
-        "material": "CD_TE",
-        "is_tracking": true,
-    };
-
-    const init = {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify(solarpanel)
-    };
-
-    fetch("http://localhost:8080/api/solarpanel/4", init)
-        .then(response => {
-            if (response.status === 404) {
-                console.log("solarpanel not found.");
-            } else if (response.status === 204) {
-                console.log("solarpanel updated!");
-            } else {
-                console.log(`Sighting id ${solarpanel.id} update failed with status ${response.status}.`);
-            }
-        })
-        }
