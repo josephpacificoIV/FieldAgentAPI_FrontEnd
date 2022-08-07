@@ -34,9 +34,9 @@ public class AgentController {
     public ResponseEntity<Object> add(@RequestBody Agent agent) {
         Result<Agent> result = service.add(agent);
         if (result.isSuccess()) {
-            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED); // 201
         }
-        return ErrorResponse.build(result);
+        return ErrorResponse.build(result); // 400 BAD_REQUEST, 500 INTERNAL_SERVER_ERROR, 404 NOT_FOUND
     }
 
     @PutMapping("/{agentId}")

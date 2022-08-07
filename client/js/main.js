@@ -48,7 +48,46 @@ function handleSubmit(event) {
     console.log(agent); // look at object before you send to server.
 
     // TODO POST the data to the API
-    
+
+    // objects are collections of key value pairs
+    const init = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(agent)
+
+    };
+
+    // pass in url, and init
+    // fetch is ASYNc, need .then() in response to that request completing
+    fetch('"http://localhost:8080/api/agent"', init)
+        .then(response => {
+            // determine the status code first
+            // want to respond to the correct situation
+            // user can give bad data
+            // look at controller, what does post mapping return
+            if (response.status === 201 || 
+                response.status === 400 || 
+                response.status === 500 ||
+                response.status === 404 ||
+                response.status === 405){
+                return response.json();
+            } else { // something returned from server we were not expecting
+                return Promise.reject(`Unexpected Status Code: ${response.status}`); // pass the error message we want to pass down
+            }
+        }) 
+        .then(data => { //recpient of response.json() when completes
+            if (data.agentId) { // does this data have an id
+                // happy path
+                console.log(data); // check if the post is working up until now
+            } else {
+                // unhappy path
+                // TODO render error messages
+                console.log(data);
+            }
+        }) 
+        .catch(error => console.log(error)); // promise is in rejected state, need to catch it
 
 }
 
