@@ -16,6 +16,43 @@ function getAgents (){ // ASYNCHRONOUS method
 }
 
 
+function handleSubmit(event) {
+    event.preventDefault(); // this stops the browser from submitting the form
+
+    const formElement = event.target; //target property is the elemetn event was raised from 
+    const formData = new FormData(formElement); //formData is like a map, with all fields
+
+    const agent = {
+        firstName: formData.get('firstName'),
+        middleName: formData.get('middleName'), // pass in 'name' attribute
+        lastName: formData.get('lastName'),
+        dob: formData.get('dob'), // ? parseDate(formData.get('dob')) : null ,
+        heightInInches: formData.get('heightInInches') ? parseInt(formData.get('heightInInches')) : 0
+    };
+
+    // const firstName = document.getElementById('firstName').value;
+    // const middleName = document.getElementById('middleName').value;
+    // const lastName = document.getElementById('lastName').value;
+    // const dob = document.getElementById('dob').value;
+    // const heightInInches = document.getElementById('heightInInches').value;
+
+    // const agent = {
+    //     firstName,
+    //     middleName,
+    //     lastName,
+    //     dob: dob ? parseDate(dob) : null,
+    //     heightInInches: heightInInches ? parseInt(heightInInches) : 0
+    // }
+
+
+    console.log(agent); // look at object before you send to server.
+
+    // TODO POST the data to the API
+    
+
+}
+
+
 function handleEditAgent(agentId){
     console.log('Editing Agent Id: ' + agentId) // Step 1: confirm the clicking is working
 }

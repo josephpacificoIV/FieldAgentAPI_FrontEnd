@@ -9,6 +9,32 @@
 <body>
     <h1>Field Agent</h1>
 
+    <form onsubmit="handleSubmit(event)">
+        <div>
+            <label for="firstName">First Name: </label>
+            <input id="firstName" name="firstName" type="text"/>
+        </div>
+        <div>
+            <label for="middleName">Middle Name: </label>
+            <input id="middleName" name="middleName" type="text"/>
+        </div>
+        <div>
+            <label for="lastName">Last Name: </label>
+            <input id="lastName" name="lastName" type="text"/>
+        </div>
+        <div>
+            <label for="dob">Date of Birth: </label>
+            <input id="dob" name="dob" type="date"/>
+        </div>
+        <div>
+            <label for="heightInInches">Height(in): </label>
+            <input id="heightInInches" name="heightInInches" type="number"/>
+        </div>
+        <div>
+            <button type = "submit">Add Agent</button>
+        </div>
+    </form>
+
     <table>
         <thead>
             <tr>
