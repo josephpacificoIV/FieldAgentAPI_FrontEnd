@@ -2,7 +2,25 @@
 let agents = [];
 let editAgentId = 0; // use a global variable to bridge the two functions
 
+function setCurrentView(view) {
+    const formContainerElement = document.getElementById('formContainer');
+    const listContainerElement = document.getElementById('listContainer');
+
+    switch (view) {
+        case 'List' :
+            // use style method 
+            formContainerElement.style.display = 'none';
+            listContainerElement.style.display = 'block';
+            break;
+        case 'Form' :
+            formContainerElement.style.display = 'block';
+            listContainerElement.style.display = 'none';
+            break;
+    }
+}
+
 function displayList(){
+    setCurrentView('List');
     getAgents()
     .then(data => {
         agents = data; // every time we fetch agent data, we store it globally
@@ -153,6 +171,10 @@ function doPut(agent) {
 }
 
 
+function handleAddAgent() {
+    setCurrentView('Form');
+}
+
 function handleEditAgent(agentId){
     // console.log('Editing Agent Id: ' + agentId) // Step 1: confirm the clicking is working
     
@@ -169,12 +191,13 @@ function handleEditAgent(agentId){
     document.getElementById('dob').value = agent.dob;
     document.getElementById('heightInInches').value = agent.heightInInches;
 
+    document.getElementById('formHeading').innerText = 'Update Solar Panel';
     // change text on button when you edit an agent
     document.getElementById('formSubmitButton').innerText = 'Update Agent';
 
     // update the handleSubmit function to send a PUT request to the API
     editAgentId = agentId;
-
+    setCurrentView('Form');
 }
 
 function handleDeleteAgent(agentId){
@@ -232,9 +255,11 @@ function renderErrors(errors) {
 
 function resetState() {
     document.getElementById('form').reset();
+    document.getElementById('formHeading').innerText = 'Add Agent';
     document.getElementById('formSubmitButton').innerText = 'Add Agent';
     document.getElementById('errors').innerHTML = '';
     editAgentId = 0;
+    setCurrentView('List');
 }
 
 

@@ -9,9 +9,11 @@
 <body>
     <h1>Field Agent</h1>
 
-    <div id="errors"></div>
+    <div id="formContainer">
+        <h2 id="formHeading">Add Agent</h2>
+        <div id="errors"></div>
 
-    <form id="form" onsubmit="handleSubmit(event)">
+        <form id="form" onsubmit="handleSubmit(event)">
         <div>
             <label for="firstName">First Name: </label>
             <input id="firstName" name="firstName" type="text"/>
@@ -36,24 +38,32 @@
             <button id="formSubmitButton" type = "submit">Add Agent</button>
             <button type="button" onclick="resetState()">Cancel</button>
         </div>
-    </form>
+        </form>
+    </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>AgentId</th>
-                <th>FirstName</th>
-                <th>MiddleName</th>
-                <th>LastName</th>
-                <th>DOB</th>
-                <th>Height(in)</th>
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody id="tableRows">
-        </tbody>
-    </table>
-    
+    <div id="listContainer">
+
+        <h2>Agents</h2>
+
+        <button onclick="handleAddAgent()">Add Agent</button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>AgentId</th>
+                    <th>FirstName</th>
+                    <th>MiddleName</th>
+                    <th>LastName</th>
+                    <th>DOB</th>
+                    <th>Height(in)</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody id="tableRows">
+            </tbody>
+        </table>
+    </div>
+
 </body>
 <script src="main.js"></script>
 
