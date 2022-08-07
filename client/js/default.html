@@ -9,7 +9,9 @@
 <body>
     <h1>Field Agent</h1>
 
-    <form onsubmit="handleSubmit(event)">
+    <div id="errors"></div>
+
+    <form id="form" onsubmit="handleSubmit(event)">
         <div>
             <label for="firstName">First Name: </label>
             <input id="firstName" name="firstName" type="text"/>
@@ -31,7 +33,8 @@
             <input id="heightInInches" name="heightInInches" type="number"/>
         </div>
         <div>
-            <button type = "submit">Add Agent</button>
+            <button id="formSubmitButton" type = "submit">Add Agent</button>
+            <button type="button" onclick="resetState()">Cancel</button>
         </div>
     </form>
 

@@ -1,8 +1,13 @@
 
+let agents = [];
+let editAgentId = 0; // use a global variable to bridge the two functions
 
-function init(){
+function displayList(){
     getAgents()
-    .then(data => renderList(data));
+    .then(data => {
+        agents = data; // every time we fetch agent data, we store it globally
+        renderList(data);
+    });
 
 }
 
@@ -45,9 +50,19 @@ function handleSubmit(event) {
     // }
 
 
-    console.log(agent); // look at object before you send to server.
+    // console.log(agent); // look at object before you send to server.
 
-    // TODO POST the data to the API
+
+    if (editAgentId > 0) {
+        doPut(agent);
+    } else {
+        doPost(agent);
+    }
+    
+    
+}
+
+function doPost(agent) {
 
     // objects are collections of key value pairs
     const init = {
@@ -59,19 +74,19 @@ function handleSubmit(event) {
 
     };
 
+    
     // pass in url, and init
     // fetch is ASYNc, need .then() in response to that request completing
-    fetch('"http://localhost:8080/api/agent"', init)
+    fetch('http://localhost:8080/api/agent', init)
         .then(response => {
-            // determine the status code first
+            // we need to determine the status code first
             // want to respond to the correct situation
             // user can give bad data
             // look at controller, what does post mapping return
             if (response.status === 201 || 
-                response.status === 400 || 
                 response.status === 500 ||
-                response.status === 404 ||
-                response.status === 405){
+                response.status === 400 || 
+                response.status === 404){
                 return response.json();
             } else { // something returned from server we were not expecting
                 return Promise.reject(`Unexpected Status Code: ${response.status}`); // pass the error message we want to pass down
@@ -79,27 +94,122 @@ function handleSubmit(event) {
         }) 
         .then(data => { //recpient of response.json() when completes
             if (data.agentId) { // does this data have an id
+    
                 // happy path
-                console.log(data); // check if the post is working up until now
+                displayList(); // then update the list
+                //console.log(data); // check if the post is working up until now
+                resetState(); 
+
+                
             } else {
+    
                 // unhappy path
-                // TODO render error messages
-                console.log(data);
+                renderErrors(data);
+                // console.log(data);
             }
         }) 
         .catch(error => console.log(error)); // promise is in rejected state, need to catch it
+}
+
+function doPut(agent) {
+    agent.agentId = editAgentId;
+
+    // objects are collections of key value pairs
+    const init = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(agent)
+    };
+
+    fetch(`http://localhost:8080/api/agent/${editAgentId}`, init)
+    // go check the controller for http status codes
+    // can ignore the 409
+    .then(response => {
+        if(response.status === 204) {
+            return null; // successful update does not return anything, response body
+        } else if (response.status === 400 ||
+            response.status === 500 ||
+            response.status === 400){
+            return response.json();
+        } else {
+            return Promise.reject(`Unexpected Status Code: ${response.status}`);
+        }
+    })
+    .then(data => {
+        if (data === null) {
+            // happy path
+            displayList();
+            resetState();
+
+        } else {
+            // unhappy path
+            renderErrors(data);
+        }
+    })
+    .catch(console.log);
 
 }
 
 
 function handleEditAgent(agentId){
-    console.log('Editing Agent Id: ' + agentId) // Step 1: confirm the clicking is working
+    // console.log('Editing Agent Id: ' + agentId) // Step 1: confirm the clicking is working
+    
+    // we need to find the agent object the user wants to edit
+    const agent = agents.find(agent => agent.agentId === agentId) // arrays have find method, pass in predicate, if found a match will return
+    console.log(agent); // check to see if you see this agent in console.
+    
+
+    // populate the form with the object values after edit button click
+    
+    document.getElementById('firstName').value = agent.firstName;
+    document.getElementById('middleName').value = agent.middleName;
+    document.getElementById('lastName').value = agent.lastName;
+    document.getElementById('dob').value = agent.dob;
+    document.getElementById('heightInInches').value = agent.heightInInches;
+
+    // change text on button when you edit an agent
+    document.getElementById('formSubmitButton').innerText = 'Update Agent';
+
+    // update the handleSubmit function to send a PUT request to the API
+    editAgentId = agentId;
+
 }
 
 function handleDeleteAgent(agentId){
     console.log('Deleting Agent Id: ' + agentId)
 
 }
+
+
+function renderErrors(errors) {
+    // console.log(errors); check if error are showing
+
+    const errorsHTML = errors.map(error => `<li>${error}</li>`); //enumerates every error element in array
+    // console.log(errorsHTML); check if error html format is correct
+
+    const errorsHTMLString = `
+        <p>The following errors were found:</p>
+        <ul>
+            ${errorsHTML.join('')}
+        </ul>
+    `;
+    // pass in empty string to make the join work properly.
+
+    document.getElementById('errors').innerHTML = errorsHTMLString;
+
+
+
+}
+
+function resetState() {
+    document.getElementById('form').reset();
+    document.getElementById('formSubmitButton').innerText = 'Add Agent';
+    document.getElementById('errors').innerHTML = '';
+    editAgentId = 0;
+}
+
 
 function renderList(agents){
     // console.log(fieldAgents); // STOP, check that it outputs to fieldAgents to console
@@ -119,12 +229,16 @@ function renderList(agents){
         </tr>`
     });
 
+    // to fix injection risks...
+    // 1) we can use a templating library ... handlebars
+    // 2) we could use React
+
     const tableBodyElement = document.getElementById('tableRows');
     tableBodyElement.innerHTML = agentsHTML.join(''); // join method on array, joins all elements into 1 concatenated string
 
 }
 
-init();
+displayList();
 
 // async await is synctactic sugar, allows to write syntax differntly, otherwise the same, still works with promises etc.
 
