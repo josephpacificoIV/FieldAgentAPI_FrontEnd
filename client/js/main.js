@@ -178,8 +178,35 @@ function handleEditAgent(agentId){
 }
 
 function handleDeleteAgent(agentId){
-    console.log('Deleting Agent Id: ' + agentId)
+    const agent = agents.find(agent => agent.agentId === agentId) // arrays have find method, pass in predicate, if found a match will return
+    
+    // alert('')// displays message to user in browser
+    // confirm('') // returns a boolean, whether or not user confirms this action
 
+    if (confirm(`Delete the Agent?`)){
+        // console.log('Deleting Agent Id: ' + agentId) check that it works
+        
+        // DELETE {{url}}/6 HTTP/1.1
+        const init = {
+            method: 'DELETE'
+        };
+
+        // pass argument of handleDeleteAgent() here 
+        fetch(`http://localhost:8080/api/agent/${agentId}`, init)
+            .then(response => { //.then to handle the response
+                // check the controller for http status errors
+                
+                // happy path
+                if (response.status === 204){
+                    displayList();
+                    resetState();
+                } else {
+                    return Promise.reject(`Unexpected Status Code: ${response.status}`);
+                }
+
+            })
+            .catch(console.log);
+    }
 }
 
 
