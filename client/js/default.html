@@ -4,51 +4,64 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Field Agent</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" 
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/darkly-bootstrap.min.css">
+    <title>Field Agent</title> 
 </head>
 <body>
-    <h1>Field Agent</h1>
 
-    <div id="formContainer">
-        <h2 id="formHeading">Add Agent</h2>
+
+    <div class="container">
+        <h1 class="my-4">Field Agent</h1>
+        
+        <div id="formContainer" class="col-9">
+
+        <h2 id="formHeading" class="mb-4">Add Agent</h2>
+
         <div id="errors"></div>
 
         <form id="form" onsubmit="handleSubmit(event)">
-        <div>
+        <div class="form-group">
             <label for="firstName">First Name: </label>
-            <input id="firstName" name="firstName" type="text"/>
+            <input id="firstName" name="firstName" type="text" class="form-control"/>
         </div>
-        <div>
+        <div class="form-group">
             <label for="middleName">Middle Name: </label>
-            <input id="middleName" name="middleName" type="text"/>
+            <input id="middleName" name="middleName" type="text" class="form-control"/>
         </div>
-        <div>
+        <div class="form-group">
             <label for="lastName">Last Name: </label>
-            <input id="lastName" name="lastName" type="text"/>
+            <input id="lastName" name="lastName" type="text" class="form-control"/>
         </div>
-        <div>
+        <div class="form-group">
             <label for="dob">Date of Birth: </label>
-            <input id="dob" name="dob" type="date"/>
+            <input id="dob" name="dob" type="date" class="form-control"/>
         </div>
-        <div>
+        <div class="form-group">
             <label for="heightInInches">Height(in): </label>
-            <input id="heightInInches" name="heightInInches" type="number"/>
+            <input id="heightInInches" name="heightInInches" type="number" class="form-control"/>
         </div>
-        <div>
-            <button id="formSubmitButton" type = "submit">Add Agent</button>
-            <button type="button" onclick="resetState()">Cancel</button>
+        <div class="mt-4">
+            <button class="btn btn-success mr-2" id="formSubmitButton" type = "submit">
+                <i class="bi bi-file-earmark-check"></i> Add Agent</button>
+            <button class="btn btn-warning" type="button" onclick="resetState()">
+                <i class="bi bi-sign-stop-fill"></i> Cancel</button>
         </div>
         </form>
-    </div>
+        </div>
 
-    <div id="listContainer">
+        <div id="listContainer">
 
         <h2>Agents</h2>
 
-        <button onclick="handleAddAgent()">Add Agent</button>
+        <button class="btn btn-primary my-4" onclick="handleAddAgent()">
+            <i class="bi bi-plus-circle"></i> Add Agent</button>
 
-        <table>
-            <thead>
+        <table class="table table-striped table-hover table-sm">
+            <thead class="thead-dark">
                 <tr>
                     <th>AgentId</th>
                     <th>FirstName</th>
@@ -64,7 +77,9 @@
         </table>
     </div>
 
-</body>
-<script src="main.js"></script>
+    </div>
 
+
+<script src="main.js"></script>
+</body>
 </html>

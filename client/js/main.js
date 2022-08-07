@@ -240,10 +240,12 @@ function renderErrors(errors) {
     // console.log(errorsHTML); check if error html format is correct
 
     const errorsHTMLString = `
+        <div class="alert alert-danger">
         <p>The following errors were found:</p>
         <ul>
             ${errorsHTML.join('')}
         </ul>
+        </div>
     `;
     // pass in empty string to make the join work properly.
 
@@ -275,8 +277,12 @@ function renderList(agents){
         <td>${agent.dob}</td>
         <td>${agent.heightInInches}</td>
         <td>
-            <button onclick="handleEditAgent(${agent.agentId})">Edit</button>
-            <button onclick="handleDeleteAgent(${agent.agentId})">Delete</button>
+            <div class="float-right mr-2">
+            <button class="btn btn-primary btn-sm" onclick="handleEditAgent(${agent.agentId})">
+                <i class="bi bi-pencil-square"></i> Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="handleDeleteAgent(${agent.agentId})">
+                <i class="bi bi-trash"></i> Delete</button>
+            </div>
         </td>
         </tr>`
     });
